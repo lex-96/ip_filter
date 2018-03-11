@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
 
         // TODO reverse lexicographically sort
 
-        sort(rbegin(ip_pool), rend(ip_pool));
+        sort(ip_pool.rbegin(), ip_pool.rend());
 
         for (auto& ip : ip_pool) {
             std::cout << ip << std::endl;
