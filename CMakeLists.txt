@@ -13,7 +13,7 @@ set_target_properties(ip_filter_cli PROPERTIES
 )
 
 
-install(TARGET ip_filter_cli RUNTIME DESTINATION bin)
+install(TARGETS ip_filter_cli RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOW DEB)
 
