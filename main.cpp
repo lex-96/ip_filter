@@ -34,17 +34,18 @@ std::ostream& operator<<(std::ostream& os, const ip_adress& ip) {
         return os;
 }
 
-ip_adress getIP(const std::string &str,const char& d) {
+ip_adress getIP(const std::string &str) {
+    const char dot = '.';
     std::vector<uint8_t> r;
 
     std::string::size_type start = 0;
-    std::string::size_type stop = str.find_first_of(d);
+    std::string::size_type stop = str.find_first_of(dot);
     while(stop != std::string::npos)
     {
         r.push_back( std::stoi(str.substr(start, stop - start)));
 
         start = stop + 1;
-        stop = str.find_first_of(d, start);
+        stop = str.find_first_of(dot, start);
     }
     r.push_back(std::stoi(str.substr(start)));
 
@@ -63,7 +64,7 @@ int main(int argc, char const *argv[])
         for(std::string line; std::getline(std::cin, line);)
         {
             std::vector<std::string> v = split(line, '\t');
-            ip_pool.push_back(getIP(v.at(0), '.'));
+            ip_pool.push_back(getIP(v.at(0)));
         }
 
         // TODO reverse lexicographically sort
