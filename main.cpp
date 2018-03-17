@@ -4,55 +4,9 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <tuple>
+#include <array>
 
-using ip_adress = std::tuple<uint8_t, uint8_t, uint8_t, uint8_t>;
-
-auto split(const std::string &str, const char& d)
-{
-    std::vector<std::string> r;
-
-    std::string::size_type start = 0;
-    std::string::size_type stop = str.find_first_of(d);
-    while(stop != std::string::npos)
-    {
-        r.push_back(str.substr(start, stop - start));
-
-        start = stop + 1;
-        stop = str.find_first_of(d, start);
-    }
-
-    r.push_back(str.substr(start));
-
-    return r;
-}
-std::ostream& operator<<(std::ostream& os, const ip_adress& ip) {
-    os <<  (int)std::get<0>(ip) << "."
-           <<  (int)std::get<1>(ip) << "."
-           <<  (int)std::get<2>(ip) << "."
-           << (int) std::get<3>(ip) ;
-        return os;
-}
-
-ip_adress getIP(const std::string &str) {
-    const char dot = '.';
-    std::vector<uint8_t> r;
-
-    std::string::size_type start = 0;
-    std::string::size_type stop = str.find_first_of(dot);
-    while(stop != std::string::npos)
-    {
-        r.push_back( std::stoi(str.substr(start, stop - start)));
-
-        start = stop + 1;
-        stop = str.find_first_of(dot, start);
-    }
-    r.push_back(std::stoi(str.substr(start)));
-
-    assert (r.size() == 4);
-
-    return std::make_tuple( r.at(0), r.at(1), r.at(2), r.at(3) );
-}
+#include "ip_filter.h"
 
 
 int main(int argc, char const *argv[])
@@ -64,7 +18,7 @@ int main(int argc, char const *argv[])
         for(std::string line; std::getline(std::cin, line);)
         {
             std::vector<std::string> v = split(line, '\t');
-            ip_pool.push_back(getIP(v.at(0)));
+            ip_pool.push_back(getIP(  std::move( v.at(0) ) ));
         }
 
         // TODO reverse lexicographically sort
@@ -78,22 +32,24 @@ int main(int argc, char const *argv[])
         // TODO filter by first byte and output
 
         for (const auto& ip : ip_pool) {
-            if (std::get<0>(ip) == 1)
+            if (ip.at(0) == 1)
                 std::cout << ip << std::endl;
         }
 
         // TODO filter by first and second bytes and output
+
         for (const auto& ip : ip_pool) {
-            if (std::get<0>(ip) == 46 && std::get<1>(ip) == 70)
+            if (ip.at(0) == 46 && ip.at(1) == 70)
                 std::cout << ip << std::endl;
         }
 
         // TODO filter by any byte and output
 
         for (const auto& ip : ip_pool) {
-            if (std::get<0>(ip) == 46 || std::get<1>(ip) == 46 || std::get<2>(ip) == 46 || std::get<3>(ip) == 46)
+            if (ip.at(0) == 46 || ip.at(1) == 46 || ip.at(2) == 46 || ip.at(3) == 46)
                 std::cout << ip << std::endl;
         }
+
 
     }
     catch(const std::exception &e)
