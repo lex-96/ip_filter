@@ -4,9 +4,9 @@ project(ip_filter VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-add_executable(ip_filter_cli main.cpp ip_filter.h)
+add_executable(ip_filter_cli ip_filter.h main.cpp)
 
-add_executable(test_ip_filter_cli ip_filter_test.cpp)
+add_executable(test_ip_filter_cli ip_filter.h ip_filter_test.cpp)
 
 set_target_properties(ip_filter_cli test_ip_filter_cli PROPERTIES
 	CXX_STANDARD 14
