@@ -10,7 +10,7 @@ add_executable(test_ip_filter_cli ip_filter_test.cpp)
 
 set_target_properties(ip_filter_cli PROPERTIES
 	CXX_STANDARD 14
-	CXX_STANDARD_REQUIRED ON
+	CXX_STANDARD_REQUIRED OFF
 	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
 )
 
