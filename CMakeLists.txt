@@ -8,8 +8,8 @@ add_executable(ip_filter_cli main.cpp ip_filter.h)
 
 add_executable(test_ip_filter_cli ip_filter_test.cpp)
 
-set_target_properties(ip_filter_cli PROPERTIES
-	CXX_STANDARD 11
+set_target_properties(ip_filter_cli test_ip_filter_cli PROPERTIES
+	CXX_STANDARD 14
 	CXX_STANDARD_REQUIRED ON
 	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
 )
