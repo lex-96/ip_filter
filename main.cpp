@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 
         // TODO reverse lexicographically sort
 
-        sort(ip_pool.begin(), ip_pool.end(), std::greater<ip_adress>());
+        sort(std::begin(ip_pool), std::end(ip_pool), std::greater<ip_adress>());
 
         for (const auto& ip : ip_pool) {
             std::cout << ip << std::endl;
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
         // TODO filter by any byte and output
 
         for (const auto& ip : ip_pool) {
-            if (ip.at(0) == 46 || ip.at(1) == 46 || ip.at(2) == 46 || ip.at(3) == 46)
+            if ( std::any_of(std::begin(ip), std::end(ip), [] (auto n) { return n == 46;}) )
                 std::cout << ip << std::endl;
         }
 
