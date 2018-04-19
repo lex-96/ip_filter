@@ -50,7 +50,6 @@ int main(int argc, char const *argv[])
         // TODO filter by any byte and output
 
         for (const auto& ip : ip_pool) {
-//            if ( std::any_of(std::begin(ip), std::end(ip), [] (auto n) { return n == 46;}) )
               if ( std::find(std::begin(ip), std::end(ip), 46) != std::end(ip) )
                 std::cout << ip << std::endl;
         }
