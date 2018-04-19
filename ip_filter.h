@@ -29,24 +29,27 @@ auto split(const std::string &str, const char& d)
 }
 
 std::ostream& operator<<(std::ostream& os, const ip_adress& ip) {
-    os << (int)ip.at(0) << '.' << (int)ip.at(1) << '.'
-        << (int)ip.at(2) << '.' << (int)ip.at(3);
+    os << static_cast<int>(ip[0]) << '.' << static_cast<int>(ip[1]) << '.'
+        << static_cast<int>(ip[2]) << '.' << static_cast<int>(ip[3]);
    return os;
 }
 
 ip_adress getIP(const std::string &str) {
     const char dot = '.';
-    ip_adress rez;
+    ip_adress res;
     int i =0;
     std::string::size_type start = 0;
     std::string::size_type stop = str.find_first_of(dot);
     while(stop != std::string::npos)
     {
-        rez[i++] = std::stoi(str.substr(start, stop - start));
+        auto part = std::stoul(str.substr(start, stop - start));
+	if (part > 255)
+		throw std::invalid_argument("wrong ip");
+	res[i++] = part;
         start = stop + 1;
         stop = str.find_first_of(dot, start);
     }
-    rez[i] =  std::stoi(str.substr(start));
-     return rez;
+    res[i] =  std::stoi(str.substr(start));
+     return res;
 }
 

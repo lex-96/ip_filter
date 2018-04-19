@@ -17,8 +17,12 @@ int main(int argc, char const *argv[])
 
         for(std::string line; std::getline(std::cin, line);)
         {
-            std::vector<std::string> v = split(line, '\t');
-            ip_pool.push_back(getIP(  std::move( v.at(0) ) ));
+            auto v = split(line, '\t');
+//           try
+//            {
+                ip_pool.push_back(getIP( v.at(0) ));
+//            }
+//            catch (std::out_of_range& e) {}
         }
 
         // TODO reverse lexicographically sort
@@ -46,7 +50,8 @@ int main(int argc, char const *argv[])
         // TODO filter by any byte and output
 
         for (const auto& ip : ip_pool) {
-            if ( std::any_of(std::begin(ip), std::end(ip), [] (auto n) { return n == 46;}) )
+//            if ( std::any_of(std::begin(ip), std::end(ip), [] (auto n) { return n == 46;}) )
+              if ( std::find(std::begin(ip), std::end(ip), 46) != std::end(ip) )
                 std::cout << ip << std::endl;
         }
 

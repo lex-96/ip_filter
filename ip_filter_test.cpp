@@ -17,6 +17,8 @@ BOOST_AUTO_TEST_CASE(test_split) {
 
 BOOST_AUTO_TEST_CASE(test_getIP) {
     BOOST_CHECK( getIP("221.22.45.31") == ip_adress({ 221, 22, 45, 31}) );
+
+    BOOST_CHECK_THROW(getIP("121.322.45.71"),  std::invalid_argument);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
