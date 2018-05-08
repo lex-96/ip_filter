@@ -11,7 +11,6 @@ using ip_adress = std::array<uint8_t, 4> ;
 auto split(const std::string &str, const char& d)
 {
     std::vector<std::string> r;
-    r.reserve(3);
 
     std::string::size_type start = 0;
     std::string::size_type stop = str.find_first_of(d);
@@ -34,22 +33,24 @@ std::ostream& operator<<(std::ostream& os, const ip_adress& ip) {
    return os;
 }
 
-ip_adress getIP(const std::string &str) {
-    const char dot = '.';
+ip_adress getIP(const std::string &str)
+{
+    auto v = split(str, '.');
+    if (v.size() != 4)
+        throw std::length_error("wrong ip format");
+
     ip_adress res;
-    int i =0;
-    std::string::size_type start = 0;
-    std::string::size_type stop = str.find_first_of(dot);
-    while(stop != std::string::npos)
+    int i = 0;
+    int tmp;
+
+    for(const auto& e : v)
     {
-        auto part = std::stoul(str.substr(start, stop - start));
-	if (part > 255)
-		throw std::invalid_argument("wrong ip");
-	res[i++] = part;
-        start = stop + 1;
-        stop = str.find_first_of(dot, start);
+        tmp = std::stoul(e);
+        if(tmp > 255)
+            throw std::invalid_argument("wrong ip");
+        res[i++] = tmp;
     }
-    res[i] =  std::stoi(str.substr(start));
+
      return res;
 }
 

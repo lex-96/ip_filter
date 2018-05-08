@@ -1,5 +1,5 @@
 #define BOOST_TEST_MODULE test_main
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 
 #include "ip_filter.h"
 
@@ -19,6 +19,8 @@ BOOST_AUTO_TEST_CASE(test_getIP) {
     BOOST_CHECK( getIP("221.22.45.31") == ip_adress({ 221, 22, 45, 31}) );
 
     BOOST_CHECK_THROW(getIP("121.322.45.71"),  std::invalid_argument);
+    BOOST_CHECK_THROW(getIP("240.234.121.22.56.78"),  std::length_error);
+    BOOST_CHECK_THROW(getIP("240.234"),  std::length_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
